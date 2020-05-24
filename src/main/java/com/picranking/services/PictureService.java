@@ -31,8 +31,8 @@ public class PictureService {
 		return pictureRepository.findAllByTheme(theme);
 	}
 	
-	public Optional<Picture> findById(String id) {
-		return pictureRepository.findById(id);
+	public Picture findById(String id) {
+		return pictureRepository.findById(id).get();
 	}
 	
 	public void save(Picture pic) {
