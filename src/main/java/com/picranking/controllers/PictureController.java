@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,6 +48,7 @@ public class PictureController {
 		model.addAttribute("author", picture.getAuthor());
 		model.addAttribute("year", cal.get(Calendar.YEAR));
 		model.addAttribute("rating", picture.getRating());
+		model.addAttribute("numOfVotes", picture.getNumOfVotes());
 		model.addAttribute("image", Base64.getEncoder().encodeToString(picture.getImage().getData()));
 		
 		return "picture";
@@ -63,6 +65,8 @@ public class PictureController {
 		picture.setTheme(theme);
 		picture.setAuthor(author);
 		picture.setRating(0.0);
+		picture.setTotal(0.0);
+		picture.setNumOfVotes(0);
 		
 		try {
 			Date d = new SimpleDateFormat("MM-dd-yyyy").parse(date);
@@ -78,5 +82,25 @@ public class PictureController {
 		
 		return "redirect:/pictures/";
 	}
+		
+	@PutMapping("/{id}")
+	public String vote(@PathVariable String id, @RequestParam double rateValue) {
+		
+		Picture pic = pictureService.findById(id);
+		
+		if (rateValue > 10.0 || rateValue < 0.0) {
+			throw new RuntimeException("Invalid score! Rate value should be between 0 and 10");
+		}
+			
+		pic.setNumOfVotes(pic.getNumOfVotes() + 1);
+		pic.setTotal(pic.getTotal() + rateValue);
+		
+		pic.setRating(pic.getTotal()/pic.getNumOfVotes());
+		
+		pictureService.save(pic);
+		
+		return "redirect:/pictures/" + id;
+	}
+	
 
 }

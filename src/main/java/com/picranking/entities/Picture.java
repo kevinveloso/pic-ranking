@@ -31,6 +31,10 @@ public class Picture {
 	
 	private double rating;
 	
+	private double total;
+	
+	private int numOfVotes;
+	
 	private Binary image;
 
 }

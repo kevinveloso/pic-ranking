@@ -10,10 +10,10 @@ import com.picranking.entities.Picture;
 @Repository
 public interface PictureRepository extends MongoRepository<Picture, String> {
 
-	List<Picture> findAllByAuthor(String author);
+	public List<Picture> findAllByAuthor(String author);
 
-	List<Picture> findAllByTittle(String tittle);
+	public List<Picture> findAllByTittle(String tittle);
 
-	List<Picture> findAllByTheme(String theme);
+	public List<Picture> findAllByTheme(String theme);
 
 }

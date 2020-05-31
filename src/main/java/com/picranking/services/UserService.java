@@ -1,7 +1,5 @@
 package com.picranking.services;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +14,14 @@ public class UserService {
 	
 	public User findById(String id) {
 		return userRepository.findById(id).get();
+	}
+	
+	public User findByUsername(String username) {
+		return userRepository.findByUsername(username);
+	}
+
+	public User findByEmail(String email) {
+		return userRepository.findByEmail(email);
 	}
 	
 	public void save(User user) {

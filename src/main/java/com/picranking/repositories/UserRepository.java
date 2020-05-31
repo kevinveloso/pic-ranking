@@ -8,4 +8,8 @@ import com.picranking.entities.User;
 @Repository
 public interface UserRepository extends MongoRepository<User, String>{
 
+	public User findByUsername(String username);
+
+	public User findByEmail(String email);
+	
 }
